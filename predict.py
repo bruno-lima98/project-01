@@ -7,7 +7,7 @@ from preprocessing import preprocess_data
 model_file = os.path.join(os.path.dirname(__file__), "model_C=0.1.bin")
 
 with open(model_file, "rb") as f_in:
-    dv, scaler, model = pickle.load(f_in)
+    model_wrapper = pickle.load(f_in)
 
 app = Flask('startup_failure')
 
@@ -21,11 +21,12 @@ def predict():
         df_startup = pd.DataFrame([startup])
         df_proc, categorical, numerical = preprocess_data(df_startup)
 
-        df_proc[numerical] = scaler.transform(df_proc[numerical])
-        X = dv.transform(df_proc.to_dict(orient='records'))
+        # Usar o scaler e dv do wrapper
+        df_proc[numerical] = model_wrapper.scaler.transform(df_proc[numerical])
+        X = model_wrapper.dv.transform(df_proc.to_dict(orient='records'))
 
-        pred_proba = model.predict_proba(X)[0, 1]
-        pred_class = model.predict(X)[0]
+        pred_proba = model_wrapper.model.predict_proba(X)[0, 1]
+        pred_class = model_wrapper.model.predict(X)[0]
 
         result = {
             'failure_probability': float(pred_proba),
