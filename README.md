@@ -87,8 +87,7 @@ Overall, the model demonstrates a reasonable balance between sensitivity (recall
 ### 1. Requirements
 Before running the project, make sure you have:
 - Python 3.12+
-- [Pipenv](https://pipenv.pypa.io/en/latest/)
-- (Optional) [Docker](https://www.docker.com/)
+- Pipenv
 
 ### 2. Local Installation
 
@@ -118,3 +117,6 @@ You can simply run it with:
 ```
 python test-predict.py
 ```
+
+### 6. Video Tutorial
+You can see a tutorial in this [video](https://youtu.be/CmCtuXhqBwg).
